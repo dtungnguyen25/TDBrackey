@@ -3,15 +3,16 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using System.Collections;
 using UnityEngine.UI;
+using TMPro;
 
 public class WaveSpawner : MonoBehaviour
 {
-    public Transform enemyPrefab;
+    public Enemy enemyPrefab;
     public Transform spawnPoint;
     public float timeBetweenWaves = 5f;
     private float startCountdown = 2f;
 
-    public Text waveCountdownText;
+    public TextMeshProUGUI waveCountdownText;
     private int waveIndex = 0;
 
     void Update()
@@ -42,7 +43,7 @@ public class WaveSpawner : MonoBehaviour
 
     void SpawnEnemy()
     {
-        Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+        Instantiate(enemyPrefab.gameObject, spawnPoint.position, spawnPoint.rotation);
     }
 
 }
