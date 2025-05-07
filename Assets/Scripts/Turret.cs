@@ -9,15 +9,21 @@ public class Turret : MonoBehaviour
     [SerializeField] public float turnSpeed = 10f;
     [SerializeField] public float fireRate = 1f;
     [SerializeField] private float fireCountdown = 0f;
-    [SerializeField] public float range = 15f;
+    [SerializeField] public float visionRange = 18f;
+    [SerializeField] public float fireRange = 15f;
     [SerializeField] public Transform firePoint;
     [SerializeField] public GameObject bulletPrefab;
+    [SerializeField] public float fixedDelay = 0.1f;
 
     [Header("Unity Setup Fields")]
     [SerializeField] public Transform partToRotate;
     [SerializeField] public Enemy target;   
     [SerializeField] public string enemyTag = "Enemy";
-    [SerializeField] private 
+    GameObject nearestEnemy = null;
+    // Variable to store the nearest enemy
+    float shortestDistance = Mathf.Infinity;
+    // Variable to store the shortest distance to an enemy
+
 
     void Start()
     {
@@ -29,10 +35,9 @@ public class Turret : MonoBehaviour
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
         // Get all enemies with the specified tag
-        float shortestDistance = Mathf.Infinity;
+        shortestDistance = Mathf.Infinity;
         // Variable to store the shortest distance to an enemy
-        GameObject nearestEnemy = null;
-        // Variable to store the nearest enemy
+      
 
         foreach (GameObject enemy in enemies) // Loop through all enemies
         {
@@ -48,7 +53,7 @@ public class Turret : MonoBehaviour
             }
         }
 
-        if (nearestEnemy != null && shortestDistance <= range)
+        if (nearestEnemy != null && shortestDistance <= visionRange)
         {
             target = nearestEnemy.GetComponent<Enemy>();
             // If a nearest enemy is found within range, set it as the target
@@ -77,9 +82,10 @@ public class Turret : MonoBehaviour
         // Convert the rotation to Euler angles
         partToRotate.rotation = Quaternion.Euler(0f, rotation.y, 0f);
         // Rotate the turret to face the target enemy
-        if(fireCountdown <= 0)
+        if(fireCountdown <= 0 && shortestDistance <= fireRange)
         {
             Shoot();
+            // If the countdown has reached zero, shoot a bullet
             fireCountdown = 1f / fireRate;
             // Reset the countdown for the next shot based on the fire rate
         }
@@ -90,6 +96,7 @@ public class Turret : MonoBehaviour
 
     void Shoot()
     {
+        
         GameObject bulletGO = (GameObject)Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         // Instantiate a new bullet at the fire point with the same rotation as the turret
         Bullet bullet = bulletGO.GetComponent<Bullet>();
@@ -105,7 +112,7 @@ public class Turret : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, range);
+        Gizmos.DrawWireSphere(transform.position, fireRange);
         // Draw a red wire sphere in the editor to visualize the turret's range
     }
 }
