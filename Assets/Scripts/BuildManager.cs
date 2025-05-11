@@ -10,6 +10,8 @@ public class BuildManager : MonoBehaviour
         {
             Debug.LogError("More than one BuildManager in scene!");
             // If there is already an instance of BuildManager, log an error and exit the method
+            Destroy(gameObject);
+            // Destroy the duplicate instance
             return;
         }
         instance = this;
@@ -18,19 +20,21 @@ public class BuildManager : MonoBehaviour
     
     public GameObject standardTurretPrefab;
     // Prefab for the standard turret
+    public GameObject missileLauncherPrefab;
+    // Prefab for the missile launcher
+
+
     private GameObject turretToBuild;
     // The turret prefab that will be built
-
-    void Start()
-    {
-        turretToBuild = standardTurretPrefab;
-        // Set the turret to build to the standard turret prefab at the start of the game
-    }
 
     public GameObject GetTurretToBuild()
     {
         return turretToBuild;
         // Return the turret prefab to be placed on the node
     }
-
+    public void SetTurretToBuild(GameObject turret)
+    {
+        turretToBuild = turret;
+        // Set the turret prefab to be built
+    }
 }

@@ -11,6 +11,8 @@ public class Node : MonoBehaviour
     // Default color of the node
     private Renderer rend;
     // Renderer component to change the color of the node
+    BuildManager buildManager;
+    // Reference to the BuildManager instance
 
     void Start()
     // This method is called when the script instance is being loaded
@@ -19,11 +21,18 @@ public class Node : MonoBehaviour
         // Get the Renderer component attached to this GameObject
         defaultColor = rend.material.color;
         // Store the default color of the node
+        buildManager = BuildManager.instance;
+        // Get the instance of BuildManager
     }
 
     void OnMouseDown()
     // This method is called when the mouse button is pressed over the collider attached to this GameObject
     {
+        if (buildManager.GetTurretToBuild() == null)
+        // Check if there is a turret prefab selected to build
+        return;
+        // If no turret is selected, exit the method
+
         if (turret != null)
         {
             Debug.Log("Node is already occupied by a turret.");
@@ -31,7 +40,7 @@ public class Node : MonoBehaviour
             // If a turret is already placed, log a message and exit the method
         }
 
-        GameObject turretToBuild = BuildManager.instance.GetTurretToBuild();
+        GameObject turretToBuild = buildManager.GetTurretToBuild();
         // Get the turret prefab to build from the BuildManager instance
         turret = (GameObject)Instantiate(turretToBuild, transform.position + positionOffset, transform.rotation);
         // Instantiate the turret prefab at the node's position with the node's rotation
@@ -40,6 +49,10 @@ public class Node : MonoBehaviour
     void OnMouseEnter()
     // This method is called when the mouse pointer enters the collider attached to this GameObject
     {
+        if (buildManager.GetTurretToBuild() == null)
+        // Check if there is a turret prefab selected to build
+        return;
+        // If no turret is selected, exit the method
         rend.material.color = hoverColor;
         // Change the color of the node to the hover color when the mouse enters
     }
