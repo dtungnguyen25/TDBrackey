@@ -11,9 +11,11 @@ public class Turret : MonoBehaviour
     [SerializeField] private float fireCountdown = 0f;
     [SerializeField] public float visionRange = 18f;
     [SerializeField] public float fireRange = 15f;
-    [SerializeField] public Transform firePoint;
+    [SerializeField] public Transform firePoint1;
+    [SerializeField] public Transform firePoint2;
     [SerializeField] public GameObject bulletPrefab;
     [SerializeField] public float fixedDelay = 0.1f;
+    [SerializeField] public GameObject fireEffectPrefab;
 
     [Header("Unity Setup Fields")]
     [SerializeField] public Transform partToRotate;
@@ -21,6 +23,8 @@ public class Turret : MonoBehaviour
     [SerializeField] public string enemyTag = "Enemy";
     GameObject nearestEnemy = null;
     // Variable to store the nearest enemy
+    private bool useFirstFirePoint = true;
+    // Flag to determine which fire point to use
     float shortestDistance = Mathf.Infinity;
     // Variable to store the shortest distance to an enemy
 
@@ -96,11 +100,26 @@ public class Turret : MonoBehaviour
 
     void Shoot()
     {
-        
-        GameObject bulletGO = (GameObject)Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+
+        Transform firepoint = useFirstFirePoint ? firePoint1 : firePoint2;
+        // Determine which fire point to use based on the flag
+        GameObject bulletGO = (GameObject)Instantiate(bulletPrefab, firepoint.position, firepoint.rotation);
         // Instantiate a new bullet at the fire point with the same rotation as the turret
         Bullet bullet = bulletGO.GetComponent<Bullet>();
         // Create a new bullet instance and get its Bullet component
+        if (fireEffectPrefab != null)
+        // Check if the fire effect prefab is assigned
+        {
+            Instantiate(fireEffectPrefab, firepoint.position, firepoint.rotation);
+            // Instantiate the fire effect prefab at the fire point
+        }
+        if (firePoint2 == null)
+        {
+            firePoint2 = firePoint1;
+            // If the second fire point is not set, use the first fire point
+        }
+        useFirstFirePoint = !useFirstFirePoint;
+        // Toggle the fire point for the next shot
 
         if (bullet != null)
         {
