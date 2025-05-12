@@ -76,6 +76,9 @@ public class Bullet : MonoBehaviour
             // Instantiate the impact effect at the bullet's position and rotation
             Instantiate(impactEffect, transform.position, transform.rotation);
         }
+        // Fill in the damage function here
+        Destroy(target.gameObject);
+        // Destroy the target game object
 
     }
 }
