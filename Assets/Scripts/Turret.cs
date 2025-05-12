@@ -8,7 +8,7 @@ public class Turret : MonoBehaviour
 
     [SerializeField] public float turnSpeed = 10f;
     [SerializeField] public float fireRate = 1f;
-    [SerializeField] private float fireCountdown = 0f;
+    private float fireCountdown = 0f;
     [SerializeField] public float visionRange = 18f;
     [SerializeField] public float fireRange = 15f;
     [SerializeField] public Transform firePoint1;

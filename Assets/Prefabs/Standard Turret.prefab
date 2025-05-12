@@ -112,9 +112,13 @@ MonoBehaviour:
   turnSpeed: 10
   fireRate: 1
   fireCountdown: 0
-  range: 15
-  firePoint: {fileID: 7958428781837961069}
+  visionRange: 18
+  fireRange: 15
+  firePoint1: {fileID: 7958428781837961069}
+  firePoint2: {fileID: 0}
   bulletPrefab: {fileID: 2004728531858656234, guid: ac3b26f99cb08554d94a56ba111c20b5, type: 3}
+  fixedDelay: 0.1
+  fireEffectPrefab: {fileID: 0}
   partToRotate: {fileID: 2249066662374034504}
   target: {fileID: 0}
   enemyTag: Enemy
