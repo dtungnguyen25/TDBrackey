@@ -8,6 +8,8 @@ public class Bullet : MonoBehaviour
     public float speed = 70f;
     public GameObject impactEffect;
     // Reference to the impact effect prefab to be instantiated on hit
+    public float explosionRadius = 0f;
+    // Radius of the explosion effect
     public float delayDestroy = 1f;
     // Delay before destroying the bullet after impact
     private bool destroyed;
@@ -76,9 +78,35 @@ public class Bullet : MonoBehaviour
             // Instantiate the impact effect at the bullet's position and rotation
             Instantiate(impactEffect, transform.position, transform.rotation);
         }
-        // Fill in the damage function here
-        Destroy(target.gameObject);
-        // Destroy the target game object
+        if (explosionRadius > 0f)
 
+        {
+            Explode();
+        } else
+        {
+            Damage(target);
+            // If there is no explosion radius, apply damage to the target
+        }
+        // Fill in the damage function here
+    }
+    void Explode ()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
+        // Get all colliders within the explosion radius
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            Damage(colliders[i].transform);
+            // Loop through all colliders and apply damage to each one
+        }
+    }
+
+    void Damage(Transform enemy)
+    {
+        if (enemy.gameObject.CompareTag("Enemy"))
+        {
+            Destroy(enemy.gameObject);
+            // Destroy the bullet game object
+        }
+        
     }
 }
