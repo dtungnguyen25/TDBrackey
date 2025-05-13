@@ -79,10 +79,11 @@ public class Bullet : MonoBehaviour
             Instantiate(impactEffect, transform.position, transform.rotation);
         }
         if (explosionRadius > 0f)
-
         {
             Explode();
-        } else
+            // If there is an explosion radius, call the Explode method
+        }
+        else
         {
             Damage(target);
             // If there is no explosion radius, apply damage to the target
@@ -103,6 +104,7 @@ public class Bullet : MonoBehaviour
     void Damage(Transform enemy)
     {
         if (enemy.gameObject.CompareTag("Enemy"))
+        // Check if the enemy has the "Enemy" tag
         {
             Destroy(enemy.gameObject);
             // Destroy the bullet game object
