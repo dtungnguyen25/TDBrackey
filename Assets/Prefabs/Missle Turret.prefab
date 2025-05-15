@@ -142,7 +142,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnSpeed: 10
   fireRate: 0.5
-  fireCountdown: 0
   visionRange: 28
   fireRange: 25
   firePoint1: {fileID: 3274754906306087103}
