@@ -721,7 +721,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1236824074}
         m_TargetAssemblyTypeName: Shop, Assembly-CSharp
-        m_MethodName: PurchaseStandardTurret
+        m_MethodName: SelectStandardTurret
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2915,7 +2915,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1236824074}
         m_TargetAssemblyTypeName: Shop, Assembly-CSharp
-        m_MethodName: PurchaseMissileLauncher
+        m_MethodName: SelectMissileLauncher
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10667,6 +10667,7 @@ GameObject:
   - component: {fileID: 829966708}
   - component: {fileID: 829966707}
   - component: {fileID: 829966709}
+  - component: {fileID: 829966710}
   m_Layer: 0
   m_Name: GameMaster
   m_TagString: Untagged
@@ -10719,6 +10720,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   standardTurretPrefab: {fileID: 8406778046660983651, guid: e2d82864e3feb5e4a982465dce5528fe, type: 3}
   missileLauncherPrefab: {fileID: 6702219435479490435, guid: 9365496273accfc4897de2e08e562cb3, type: 3}
+--- !u!114 &829966710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 829966706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d49465b1b2ae1c4da0d45b6a5816163, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startMoney: 400
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -15506,6 +15520,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2f0028d0cb1a0043b15b9117caec6aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  standardTurret:
+    prefab: {fileID: 8406778046660983651, guid: e2d82864e3feb5e4a982465dce5528fe, type: 3}
+    cost: 100
+  missileLauncher:
+    prefab: {fileID: 6702219435479490435, guid: 9365496273accfc4897de2e08e562cb3, type: 3}
+    cost: 250
 --- !u!1001 &1238794459
 PrefabInstance:
   m_ObjectHideFlags: 0
