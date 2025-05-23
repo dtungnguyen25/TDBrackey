@@ -24,17 +24,42 @@ public class BuildManager : MonoBehaviour
     // Prefab for the missile launcher
 
 
-    private GameObject turretToBuild;
+    private TurretBlueprint turretToBuild;
     // The turret prefab that will be built
 
-    public GameObject GetTurretToBuild()
+    public bool CanBuild
     {
-        return turretToBuild;
-        // Return the turret prefab to be placed on the node
+        get
+        {
+            return turretToBuild != null;
+            // Check if there is a turret prefab selected to build
+        }
     }
-    public void SetTurretToBuild(GameObject turret)
+
+    public void BuildTurretOn(Node node)
+    {
+        if (PlayerStats.money < turretToBuild.cost)
+        {
+            Debug.Log("Not enough money to build this turret!");
+            // If the player does not have enough money, log a message and exit the method
+            return;
+        }
+
+        PlayerStats.money -= turretToBuild.cost;
+        // Deduct the cost of the turret from the player's money
+        
+        GameObject turret = (GameObject)Instantiate(turretToBuild.prefab, node.GetBuildPosition(), Quaternion.identity);
+        // Instantiate the turret prefab at the node's position with no rotation
+        node.turret = turret;
+        // Set the turret reference in the node to the newly instantiated turret
+
+        Debug.Log("Turret built! Money left: " + PlayerStats.money);
+        // Log the remaining money after building the turret
+    }
+
+    public void SelectTurretToBuild (TurretBlueprint turret)
     {
         turretToBuild = turret;
-        // Set the turret prefab to be built
+        // Set the turret prefab to be built to the selected turret prefab
     }
 }

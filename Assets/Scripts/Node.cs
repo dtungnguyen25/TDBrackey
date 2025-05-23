@@ -6,7 +6,10 @@ public class Node : MonoBehaviour
     // Color to change to when the mouse hovers over the node
     public Vector3 positionOffset = new Vector3(0f, 0.5f, 0f);
     // Offset to position the turret above the node
-    private GameObject turret;
+
+    [Header("Optional")]
+    public GameObject turret;
+    // Reference to the turret prefab that will be placed on this node
     private Color defaultColor;
     // Default color of the node
     private Renderer rend;
@@ -25,10 +28,16 @@ public class Node : MonoBehaviour
         // Get the instance of BuildManager
     }
 
+    public Vector3 GetBuildPosition()
+    {
+        return transform.position + positionOffset;
+        // Return the position of the node with the offset
+    }
+
     void OnMouseDown()
     // This method is called when the mouse button is pressed over the collider attached to this GameObject
     {
-        if (buildManager.GetTurretToBuild() == null)
+        if (!buildManager.CanBuild)
         // Check if there is a turret prefab selected to build
         return;
         // If no turret is selected, exit the method
@@ -40,16 +49,14 @@ public class Node : MonoBehaviour
             // If a turret is already placed, log a message and exit the method
         }
 
-        GameObject turretToBuild = buildManager.GetTurretToBuild();
-        // Get the turret prefab to build from the BuildManager instance
-        turret = (GameObject)Instantiate(turretToBuild, transform.position + positionOffset, transform.rotation);
-        // Instantiate the turret prefab at the node's position with the node's rotation
+        buildManager.BuildTurretOn(this);
+        // Call the BuildTurretOn method in BuildManager to place the turret on this node
 
     }
     void OnMouseEnter()
     // This method is called when the mouse pointer enters the collider attached to this GameObject
     {
-        if (buildManager.GetTurretToBuild() == null)
+        if (!buildManager.CanBuild)
         // Check if there is a turret prefab selected to build
         return;
         // If no turret is selected, exit the method
